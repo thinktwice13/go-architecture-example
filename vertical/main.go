@@ -3,18 +3,22 @@ package main
 import (
 	"log"
 	"net/http"
+	"vert/feature/retrieve"
 	"vert/feature/upload"
 	"vert/shared/db"
+	"vert/shared/event"
+
+	"github.com/julienschmidt/httprouter"
 )
 
 func main() {
-	store := db.InMemoryDB{}
-	svc := upload.NewService(&store)
-	handler := upload.NewHTTPHandler(svc)
+	store := &db.InMemoryDB{}
+	eb := &event.Bus{}
 
-	router := http.NewServeMux()
-	router.HandleFunc("/upload", handler.HandleUpload)
-	router.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+	router := httprouter.New()
+	router.POST("/documents", upload.New(store, eb))
+	router.GET("/documents/:id", retrieve.New(store))
+	router.GET("/health", func(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		w.WriteHeader(http.StatusOK)
 	})
 

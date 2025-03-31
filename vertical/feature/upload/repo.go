@@ -10,7 +10,7 @@ type Repository struct {
 	db *db.InMemoryDB
 }
 
-func NewRepository(db *db.InMemoryDB) *Repository {
+func newRepo(db *db.InMemoryDB) *Repository {
 	return &Repository{db: db}
 }
 
