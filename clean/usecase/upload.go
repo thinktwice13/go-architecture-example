@@ -6,11 +6,12 @@ import (
 )
 
 type UploadDocumentUseCase struct {
-	repo iface.DocumentRepository
+	repo     iface.DocumentRepository
+	eventBus iface.EventBus
 }
 
-func NewDocumentUploadUseCase(repo iface.DocumentRepository) *UploadDocumentUseCase {
-	return &UploadDocumentUseCase{repo}
+func NewDocumentUploadUseCase(repo iface.DocumentRepository, eb iface.EventBus) *UploadDocumentUseCase {
+	return &UploadDocumentUseCase{repo, eb}
 }
 
 func (uc *UploadDocumentUseCase) Upload(doc entity.Document) error {

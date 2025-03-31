@@ -26,7 +26,7 @@ func (r *DocumentRepository) Save(doc entity.Document) error {
 	return r.db.Set(strconv.FormatInt(doc.ID, 10), doc)
 }
 
-func (r *DocumentRepository) Find(id int64) (*entity.Document, error) {
+func (r *DocumentRepository) FindByID(id int64) (*entity.Document, error) {
 	v, err := r.db.Get(strconv.FormatInt(id, 10))
 	if err != nil {
 		return nil, err
@@ -34,20 +34,6 @@ func (r *DocumentRepository) Find(id int64) (*entity.Document, error) {
 	doc, ok := v.(entity.Document)
 	if !ok {
 		return nil, ErrNotFound
-	} else {
-		doc = v.(entity.Document)
 	}
 	return &doc, nil
-}
-
-func (r *DocumentRepository) UpdateStatus(id int64, status string) error {
-	doc, err := r.Find(id)
-	if err != nil {
-		return err
-	}
-	if doc == nil {
-		return ErrNotFound
-	}
-	doc.Status = status
-	return r.Save(*doc)
 }

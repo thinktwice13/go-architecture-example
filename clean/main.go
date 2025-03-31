@@ -2,21 +2,27 @@ package main
 
 import (
 	"clean/adapter/api"
+	"clean/adapter/eventbus"
 	"clean/adapter/persistence"
 	"clean/infra/storage"
 	"clean/usecase"
 	"log"
 	"net/http"
+
+	"github.com/julienschmidt/httprouter"
 )
 
 func main() {
 	repo := persistence.NewDocumentRepository(storage.ConnectDB())
-	uc := usecase.NewDocumentUploadUseCase(repo)
-	documentHandler := api.NewHandler(uc)
+	eb := &eventbus.Bus{}
+	upload := usecase.NewDocumentUploadUseCase(repo, eb)
+	retrieval := usecase.NewRetrieveDocumentUseCase(repo, eb)
+	apiHandler := api.NewHandler(upload, retrieval)
 
-	router := http.NewServeMux()
-	router.HandleFunc("/", documentHandler.UploadDocument)
-	router.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+	router := httprouter.New()
+	router.POST("/documents", apiHandler.UploadDocument)
+	router.GET("/documents/:id", apiHandler.GetDocument)
+	router.GET("/health", func(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		w.WriteHeader(http.StatusOK)
 	})
 
