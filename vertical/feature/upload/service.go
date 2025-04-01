@@ -1,26 +1,22 @@
 package upload
 
 import (
-	"hex/core/domain"
 	"time"
-	"vert/shared/db"
+	"vert/shared/domain"
 	"vert/shared/event"
 )
 
 type Service struct {
 	repo *Repository
-	pub  event.Publisher
-}
-
-func newService(db *db.DB, pub event.Publisher) *Service {
-	return &Service{newRepo(db), pub}
+	pub  *event.Bus
 }
 
 func (s *Service) UploadDocument(doc domain.Document) error {
 	_ = s.repo.Save(doc)
-	_ = s.pub.Publish(domain.DocumentUploaded{
-		Document:  doc,
-		Timestamp: time.Now().UTC(),
+	_ = s.pub.Publish(domain.DocumentEvent{
+		Type:      domain.EventDocumentUploaded,
+		Document:  &doc,
+		Timestamp: time.Time{},
 	})
 	return nil
 }

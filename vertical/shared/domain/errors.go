@@ -1,8 +1,15 @@
 package domain
 
-import "errors"
+type ErrInvalidDocument string
 
-var (
-	ErrDocumentNotFound = errors.New("document not found")
-	ErrInvalidDocument  = errors.New("invalid document")
-)
+func (e ErrInvalidDocument) Error() string {
+	return string(e)
+}
+
+type ErrDocumentNotFound struct {
+	ID string
+}
+
+func (e ErrDocumentNotFound) Error() string {
+	return "document not found: " + e.ID
+}

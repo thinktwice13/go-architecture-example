@@ -1,19 +1,16 @@
 package upload
 
 import (
-	"hex/core/domain"
-	"strconv"
+	"fmt"
 	"vert/shared/db"
+	"vert/shared/domain"
 )
 
 type Repository struct {
 	db *db.DB
 }
 
-func newRepo(db *db.DB) *Repository {
-	return &Repository{db: db}
-}
-
-func (r *Repository) Save(doc domain.Document) error {
-	return r.db.Set(strconv.Itoa(int(doc.ID)), doc)
+func (r *Repository) Save(_ domain.Document) error {
+	fmt.Println("Saving document ...")
+	return nil
 }

@@ -14,7 +14,7 @@ import (
 
 func BootstrapAndRun() error {
 	// Infra
-	store := db.ConnectDB()
+	store := &db.DB{}
 	eb := events.Bus{}
 
 	// Services

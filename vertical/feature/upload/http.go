@@ -1,30 +1,38 @@
+// Package upload provides all the document uploading needs.
+// This is an example of a more complex feature that has its own handler, service, and repository.
 package upload
 
 import (
-	"hex/core/domain"
 	"net/http"
 	"time"
 	"vert/shared/db"
+	"vert/shared/domain"
 	"vert/shared/event"
 
 	"github.com/julienschmidt/httprouter"
 )
 
-func New(store *db.DB, pub event.Publisher) httprouter.Handle {
-	svc := newService(store, pub)
-	return func(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+// New bootstraps the upload feature from low-level infrastructure components, including the router attachment.
+func New(router *httprouter.Router, db *db.DB, pub *event.Bus) {
+	repo := &Repository{db}
+	svc := Service{repo, pub}
+
+	router.POST("/documents", func(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+		// Validation...
 		doc := domain.Document{
 			ID:        time.Now().UnixNano(),
-			Name:      "example.txt",
+			Name:      "sample.txt",
 			Status:    "new",
-			CreatedAt: time.Now(),
+			CreatedAt: time.Now().UTC(),
 		}
 
-		if err := svc.UploadDocument(doc); err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
+		_ = svc.UploadDocument(doc)
+		_ = pub.Publish(domain.DocumentEvent{
+			Type:      domain.EventDocumentUploaded,
+			Document:  &doc,
+			Timestamp: time.Time{}.UTC(),
+		})
 
 		w.WriteHeader(http.StatusCreated)
-	}
+	})
 }
