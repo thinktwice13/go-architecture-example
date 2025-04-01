@@ -6,7 +6,7 @@ import (
 )
 
 type Publisher interface {
-	Publish(event domain.DocumentEvent) error
+	Publish(domain.DocumentEvent) error
 }
 
 type Bus struct{}

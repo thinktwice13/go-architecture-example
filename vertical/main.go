@@ -12,9 +12,8 @@ import (
 )
 
 func main() {
-	store := &db.InMemoryDB{}
+	store := &db.DB{}
 	eb := &event.Bus{}
-
 	router := httprouter.New()
 	router.POST("/documents", upload.New(store, eb))
 	router.GET("/documents/:id", retrieve.New(store))

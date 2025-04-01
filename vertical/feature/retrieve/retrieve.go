@@ -8,16 +8,12 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-func New(db *db.InMemoryDB) httprouter.Handle {
-	// Intentionally skipping service layer for simple featuress without extensive validation or orchestration needed
+func New(db *db.DB) httprouter.Handle {
+	// Vertical slice intentionally skipping service layer for simple features, without extensive validation or orchestration logic
 	repo := &Repository{db}
 	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		id := ps.ByName("id")
-		doc, err := repo.FindByID(id)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusNotFound)
-			return
-		}
+		doc, _ := repo.FindByID(id)
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 		_ = json.NewEncoder(w).Encode(doc)

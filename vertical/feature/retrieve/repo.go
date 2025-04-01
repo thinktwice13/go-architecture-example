@@ -6,13 +6,18 @@ import (
 )
 
 type Repository struct {
-	db *db.InMemoryDB
+	db *db.DB
 }
 
-func (r *Repository) FindByID(id string) (domain.Document, error) {
-	doc, err := r.db.Get(id)
+func (r *Repository) FindByID(id string) (*domain.Document, error) {
+	v, err := r.db.Get(id)
 	if err != nil {
-		return domain.Document{}, err
+		return nil, domain.ErrDocumentNotFound
 	}
-	return doc.(domain.Document), nil
+
+	doc, ok := v.(domain.Document)
+	if !ok {
+		return nil, err
+	}
+	return &doc, nil
 }

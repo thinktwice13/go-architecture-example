@@ -1,16 +1,24 @@
 package eventbus
 
 import (
-	"clean/entity"
-	"clean/usecase/iface"
+	"clean/adapter/logging"
 	"fmt"
+
+	"clean/domain/event"
 )
 
-var _ iface.EventBus = (*Bus)(nil)
+// EventBus implements the event publisher interface defined in the domain
+type EventBus struct {
+	logger logging.Logger
+}
 
-type Bus struct{}
+func NewEventBus(logger logging.Logger) *EventBus {
+	return &EventBus{
+		logger: logger,
+	}
+}
 
-func (eb *Bus) Publish(event entity.DocumentEvent) error {
-	fmt.Println("Publishing event:", event)
+func (eb *EventBus) Publish(event event.DocumentEvent) error {
+	fmt.Printf("Publishing event: %s\n", event)
 	return nil
 }

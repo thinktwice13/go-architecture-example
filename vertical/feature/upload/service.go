@@ -12,7 +12,7 @@ type Service struct {
 	pub  event.Publisher
 }
 
-func newService(db *db.InMemoryDB, pub event.Publisher) *Service {
+func newService(db *db.DB, pub event.Publisher) *Service {
 	return &Service{newRepo(db), pub}
 }
 

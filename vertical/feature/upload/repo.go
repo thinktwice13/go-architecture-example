@@ -7,10 +7,10 @@ import (
 )
 
 type Repository struct {
-	db *db.InMemoryDB
+	db *db.DB
 }
 
-func newRepo(db *db.InMemoryDB) *Repository {
+func newRepo(db *db.DB) *Repository {
 	return &Repository{db: db}
 }
 
