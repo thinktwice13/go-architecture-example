@@ -29,9 +29,8 @@ func New() *Application {
 func (a *Application) Init() error {
 	a.db = &storage.DB{}
 	container := NewContainer(a.logger, a.db)
-	router := router.NewRouter(container.DocumentHandler)
-	httpRouter := router.Routes()
-	a.server = server.NewServer(httpRouter, a.logger)
+	appRouter := router.NewRouter(container.DocumentHandler)
+	a.server = server.NewServer(appRouter.Routes())
 	return nil
 }
 

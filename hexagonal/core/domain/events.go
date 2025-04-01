@@ -2,20 +2,16 @@ package domain
 
 import (
 	"time"
-	"vert/shared/domain"
 )
 
-type DocumentEvent interface {
-	GetDocumentID() int64
-}
+type EventType string
 
-var _ domain.DocumentEvent = (*DocumentUploaded)(nil)
+const (
+	EventDocumentUploaded EventType = "document.uploaded"
+)
 
-type DocumentUploaded struct {
-	Document  Document
+type DocumentEvent struct {
+	Type      EventType
+	Document  *Document
 	Timestamp time.Time
-}
-
-func (e DocumentUploaded) GetDocumentID() int64 {
-	return e.Document.ID
 }

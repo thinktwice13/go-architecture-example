@@ -1,13 +1,7 @@
 package domain
 
 import (
-	"errors"
 	"time"
-)
-
-var (
-	ErrDocumentNotFound = errors.New("document not found")
-	ErrInvalidDocument  = errors.New("invalid document")
 )
 
 type Document struct {
@@ -15,4 +9,14 @@ type Document struct {
 	Name      string    `json:"name"`
 	Status    string    `json:"status"`
 	CreatedAt time.Time `json:"createdAt"`
+}
+
+// Validate ensures the document meets domain rules
+// Note: Pure domain logic with no dependencies
+func (d *Document) Validate() error {
+	if d.Name == "" {
+		return ErrInvalidDocument("document name cannot be empty")
+	}
+
+	return nil
 }

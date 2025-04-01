@@ -1,7 +1,11 @@
 package output
 
-import "hex/core/domain"
+import (
+	"hex/core/domain"
+)
 
+// EventPublisher defines the output port for publishing events
+// This is another hexagon boundary that core services use to communicate outward
 type EventPublisher interface {
-	Publish(event domain.DocumentEvent)
+	Publish(domain.DocumentEvent) error
 }

@@ -35,5 +35,6 @@ func (h *DocumentHandler) Get(w http.ResponseWriter, r *http.Request, ps httprou
 	id := ps.ByName("id")
 	docID, _ := strconv.ParseInt(id, 10, 64)
 	doc, _ := h.retrieveUseCase.Retrieve(r.Context(), docID)
+	w.Header().Set("Content-Type", "application/json")
 	_ = json.NewEncoder(w).Encode(doc)
 }
