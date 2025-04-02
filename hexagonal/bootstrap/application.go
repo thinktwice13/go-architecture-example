@@ -2,12 +2,12 @@ package bootstrap
 
 import (
 	apphttp "hexagonal/adapter/input/http"
+	"hexagonal/adapter/input/server"
 	"hexagonal/adapter/output/db"
 	"hexagonal/adapter/output/errs"
 	events "hexagonal/adapter/output/event"
 	"hexagonal/adapter/output/repo"
 	"hexagonal/core/service"
-	"net/http"
 
 	"github.com/julienschmidt/httprouter"
 )
@@ -26,5 +26,6 @@ func RunApplication() error {
 	httpHandler.Routes(router)
 
 	// Start
-	return http.ListenAndServe(":8080", router)
+	srv := server.NewServer(router)
+	return srv.Start()
 }

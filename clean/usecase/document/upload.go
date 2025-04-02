@@ -1,7 +1,6 @@
 package document
 
 import (
-	adaptevent "clean/adapter/event"
 	"clean/domain/entity"
 	"clean/domain/event"
 	"clean/domain/repo"
@@ -10,10 +9,10 @@ import (
 
 type UploadUseCase struct {
 	repo repo.DocRepo
-	pub  adaptevent.Publisher
+	pub  event.Publisher
 }
 
-func NewUploadUseCase(repo repo.DocRepo, pub adaptevent.Publisher) *UploadUseCase {
+func NewUploadUseCase(repo repo.DocRepo, pub event.Publisher) *UploadUseCase {
 	return &UploadUseCase{repo, pub}
 }
 

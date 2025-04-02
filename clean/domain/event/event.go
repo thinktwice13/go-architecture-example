@@ -1,6 +1,8 @@
 package event
 
-import "time"
+import (
+	"time"
+)
 
 type DocumentEvent interface {
 	GetDocumentID() int64

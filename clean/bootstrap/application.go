@@ -5,8 +5,8 @@ import (
 	"clean/adapter/event"
 	"clean/adapter/persistence"
 	"clean/infra/db"
+	"clean/infra/server"
 	"clean/usecase/document"
-	"net/http"
 
 	"github.com/julienschmidt/httprouter"
 )
@@ -29,5 +29,8 @@ func RunApplication() error {
 	httpHandler := handler.NewDocumentHandler(uploadUC, retrieveUC)
 	router.POST("/documents", httpHandler.Upload)
 	router.GET("/documents/:id", httpHandler.Get)
-	return http.ListenAndServe(":8080", router)
+
+	// Server
+	srv := server.NewServer(router)
+	return srv.Start()
 }

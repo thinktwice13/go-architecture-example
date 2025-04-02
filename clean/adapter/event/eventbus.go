@@ -6,10 +6,7 @@ import (
 	"clean/domain/event"
 )
 
-// Publisher is an example of a convenience interface defined as a helper for usecases
-type Publisher interface {
-	Publish(event event.DocumentEvent) error
-}
+var _ event.Publisher = (*Bus)(nil)
 
 type Bus struct{}
 
