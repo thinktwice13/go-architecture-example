@@ -11,13 +11,13 @@ import (
 // RetrieveUseCase implements the document retrieval use case
 // Separation at use case level for distinct features
 type RetrieveUseCase struct {
-	repo   Repository // Same repository interface, shared across use cases
+	repo   Repo // Same repo interface, shared across use cases
 	pub    EventPublisher
 	logger logging.Logger
 }
 
 // NewRetrieveUseCase creates a new retrieve use case
-func NewRetrieveUseCase(repo Repository, events EventPublisher, logger logging.Logger) *RetrieveUseCase {
+func NewRetrieveUseCase(repo Repo, events EventPublisher, logger logging.Logger) *RetrieveUseCase {
 	return &RetrieveUseCase{
 		repo:   repo,
 		pub:    events,

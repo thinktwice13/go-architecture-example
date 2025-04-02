@@ -6,11 +6,11 @@ import (
 	"vert/shared/domain"
 )
 
-type Repository struct {
-	db *db.DB
+type Repo struct {
+	db *db.Conn
 }
 
-func (r *Repository) Save(_ domain.Document) error {
+func (r *Repo) Save(_ domain.Document) error {
 	fmt.Println("Saving document ...")
 	return nil
 }

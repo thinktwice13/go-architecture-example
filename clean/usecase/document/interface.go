@@ -5,9 +5,9 @@ import (
 	"clean/domain/event"
 )
 
-// Repository defines the entity-level interface required for document persistence
+// Repo defines the entity-level interface required for document persistence
 // This is shared between multiple use cases that operate on the same entity
-type Repository interface {
+type Repo interface {
 	Save(doc entity.Document) error
 	FindByID(id int64) (*entity.Document, error)
 	Update(doc entity.Document) error

@@ -5,7 +5,7 @@ import (
 	"hex/adapter/output/db"
 	"hex/adapter/output/errs"
 	events "hex/adapter/output/event"
-	"hex/adapter/output/repository"
+	"hex/adapter/output/repo"
 	"hex/core/service"
 	"net/http"
 
@@ -18,7 +18,7 @@ func BootstrapAndRun() error {
 	eb := events.Bus{}
 
 	// Services
-	repo := repository.NewInMemoryRepository(store)
+	repo := repo.NewInMemoryRepo(store)
 	errHandler := errs.NewErrorHandler()
 	svc := service.NewDocumentService(repo, &eb, errHandler)
 	httpHandler := apphttp.NewDocumentHandler(svc)

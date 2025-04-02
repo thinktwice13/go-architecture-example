@@ -1,4 +1,4 @@
-package repository
+package repo
 
 import (
 	"fmt"
@@ -8,16 +8,16 @@ import (
 	"time"
 )
 
-// InMemory implements the DocumentRepository output port
+// InMemory implements the DocumentRepo output port
 // This is a secondary adapter that is driven by the application
 type InMemory struct {
 	db *db.DB
 }
 
-var _ output.DocumentRepository = (*InMemory)(nil)
+var _ output.DocumentRepo = (*InMemory)(nil)
 
-// NewInMemoryRepository creates a new Postgres-based document repository
-func NewInMemoryRepository(db *db.DB) output.DocumentRepository {
+// NewInMemoryRepo creates a new Postgres-based document repo
+func NewInMemoryRepo(db *db.DB) output.DocumentRepo {
 	return &InMemory{db}
 }
 

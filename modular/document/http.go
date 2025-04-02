@@ -7,7 +7,7 @@ import (
 )
 
 func NewUploadHandler(db *storage.DB) http.HandlerFunc {
-	repo := InMemoryRepository{db}
+	repo := InMemoryRepo{db}
 	return func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodPost {
 			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)

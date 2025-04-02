@@ -7,7 +7,7 @@ import (
 )
 
 type Service struct {
-	repo *Repository
+	repo *Repo
 	pub  *event.Bus
 }
 

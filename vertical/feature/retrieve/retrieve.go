@@ -15,11 +15,11 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-type Repository struct {
-	db *db.DB
+type Repo struct {
+	db *db.Conn
 }
 
-func (r *Repository) FindByID(id int64) (*domain.Document, error) {
+func (r *Repo) FindByID(id int64) (*domain.Document, error) {
 	fmt.Println("Getting document from database")
 	return &domain.Document{
 		ID:        id,
@@ -30,8 +30,8 @@ func (r *Repository) FindByID(id int64) (*domain.Document, error) {
 }
 
 // New bootstraps the upload feature from low-level infrastructure components, including the router attachment.
-func New(router *httprouter.Router, db *db.DB) {
-	repo := &Repository{db}
+func New(router *httprouter.Router, db *db.Conn) {
+	repo := &Repo{db}
 
 	router.GET("/documents/:id", func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		id := ps.ByName("id")

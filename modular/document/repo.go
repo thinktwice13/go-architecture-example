@@ -5,14 +5,14 @@ import (
 	"strconv"
 )
 
-type Repository interface {
+type Repo interface {
 	Save(document Document) error
 }
 
-type InMemoryRepository struct {
+type InMemoryRepo struct {
 	store *storage.DB
 }
 
-func (r *InMemoryRepository) Save(document Document) error {
+func (r *InMemoryRepo) Save(document Document) error {
 	return r.store.Set(strconv.FormatInt(document.ID, 10), document)
 }

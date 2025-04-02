@@ -14,18 +14,18 @@ var (
 // DocumentService implements the input ports (use cases) for document operations
 // This is the core application service that orchestrates the domain logic
 type DocumentService struct {
-	repo   output.DocumentRepository
+	repo   output.DocumentRepo
 	pub    output.EventPublisher
 	errors output.ErrorHandler
 }
 
-// func NewDocumentService(repo output.DocumentRepository, eb output.EventPublisher) *DocumentService {
+// func NewDocumentService(repo output.DocumentRepo, eb output.EventPublisher) *DocumentService {
 // 	return &DocumentService{repo, eb}
 // }
 
 // NewDocumentService creates a new document service with required dependencies
 func NewDocumentService(
-	repo output.DocumentRepository,
+	repo output.DocumentRepo,
 	pub output.EventPublisher,
 	errors output.ErrorHandler,
 ) *DocumentService {

@@ -7,28 +7,28 @@ import (
 	"time"
 )
 
-// DocumentRepository implements the document repository interface
-type DocumentRepository struct {
+// DocumentRepo implements the document repo interface
+type DocumentRepo struct {
 	db     *storage.DB
 	logger logging.Logger
 }
 
-// NewDocumentRepository creates a new document repository
-func NewDocumentRepository(db *storage.DB, logger logging.Logger) *DocumentRepository {
-	return &DocumentRepository{
+// NewDocumentRepo creates a new document repo
+func NewDocumentRepo(db *storage.DB, logger logging.Logger) *DocumentRepo {
+	return &DocumentRepo{
 		db:     db,
 		logger: logger,
 	}
 }
 
 // Save stores a document
-func (r *DocumentRepository) Save(_ entity.Document) error {
+func (r *DocumentRepo) Save(_ entity.Document) error {
 	r.logger.Log("Saving document")
 	return nil
 }
 
 // FindByID retrieves a document by ID
-func (r *DocumentRepository) FindByID(id int64) (*entity.Document, error) {
+func (r *DocumentRepo) FindByID(id int64) (*entity.Document, error) {
 	r.logger.Log("Finding document by ID")
 	doc := &entity.Document{
 		ID:        id,
@@ -40,7 +40,7 @@ func (r *DocumentRepository) FindByID(id int64) (*entity.Document, error) {
 }
 
 // Update modifies an existing document
-func (r *DocumentRepository) Update(_ entity.Document) error {
+func (r *DocumentRepo) Update(_ entity.Document) error {
 	r.logger.Log("Updating document")
 	return nil
 }

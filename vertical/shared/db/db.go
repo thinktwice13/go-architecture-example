@@ -1,4 +1,4 @@
 package db
 
-// DB is a low-level real database connection
-type DB struct{}
+// Conn is a low-level real database connection
+type Conn struct{}

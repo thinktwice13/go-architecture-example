@@ -13,7 +13,7 @@ import (
 func BootstrapAndRun() error {
 	// Infra
 	router := httprouter.New() // input
-	store := &db.DB{}          // output
+	store := &db.Conn{}        // output
 	eb := &event.Bus{}         // both input and output
 
 	// Domain

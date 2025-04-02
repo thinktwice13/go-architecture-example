@@ -8,10 +8,10 @@ package persistence
 // 	"time"
 // )
 //
-// func TestDocumentRepositoryIntegration(t *testing.T) {
+// func TestDocumentRepoIntegration(t *testing.T) {
 // 	// Routes real DB or init test container
 // 	db := storage.ConnectDB()
-// 	repo := NewDocumentRepository(db)
+// 	repo := NewDocumentRepo(db)
 //
 // 	// Create a test document
 // 	doc := entity.Document{

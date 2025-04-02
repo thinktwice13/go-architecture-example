@@ -8,12 +8,12 @@ import (
 )
 
 type UploadUseCase struct {
-	repo   Repository
+	repo   Repo
 	pub    EventPublisher
 	logger logging.Logger
 }
 
-func NewUploadUseCase(repo Repository, events EventPublisher, logger logging.Logger) *UploadUseCase {
+func NewUploadUseCase(repo Repo, events EventPublisher, logger logging.Logger) *UploadUseCase {
 	return &UploadUseCase{
 		repo:   repo,
 		pub:    events,

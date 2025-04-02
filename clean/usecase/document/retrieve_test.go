@@ -8,7 +8,7 @@ package document
 // 	"time"
 // )
 //
-// // MockRepo is a mock implementation of Repository
+// // MockRepo is a mock implementation of Repo
 // type MockRepo struct {
 // 	docs map[int64]entity2.Document
 // }
