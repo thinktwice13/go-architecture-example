@@ -1,4 +1,4 @@
-package application
+package bootstrap
 
 import (
 	apphttp "hex/adapter/input/http"
@@ -12,9 +12,9 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-func BootstrapAndRun() error {
+func RunApplication() error {
 	// Infra
-	store := &db.DB{}
+	store := &db.Conn{}
 	eb := events.Bus{}
 
 	// Services

@@ -10,7 +10,6 @@ import (
 type Repo interface {
 	Save(doc entity.Document) error
 	FindByID(id int64) (*entity.Document, error)
-	Update(doc entity.Document) error
 }
 
 // EventPublisher defines the interface for publishing domain pub

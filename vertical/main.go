@@ -2,9 +2,9 @@ package main
 
 import (
 	"log"
-	"vert/application"
+	"vert/bootstrap"
 )
 
 func main() {
-	log.Fatal(application.BootstrapAndRun())
+	log.Fatal(bootstrap.RunApplication())
 }

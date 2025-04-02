@@ -2,9 +2,10 @@ package main
 
 import (
 	"clean/app"
+	"clean/bootstrap"
 	"log"
 )
 
 func main() {
-	log.Fatal(app.Run())
+	log.Fatal(bootstrap.RunApplication())
 }

@@ -1,4 +1,4 @@
-package application
+package bootstrap
 
 import (
 	"net/http"
@@ -10,7 +10,7 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-func BootstrapAndRun() error {
+func RunApplication() error {
 	// Infra
 	router := httprouter.New() // input
 	store := &db.Conn{}        // output

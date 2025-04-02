@@ -3,33 +3,35 @@ package persistence
 import (
 	"clean/adapter/logging"
 	"clean/domain/entity"
-	"clean/infra/storage"
+	"clean/infra/db"
+	"clean/usecase/document"
+	"fmt"
 	"time"
 )
 
 // DocumentRepo implements the document repo interface
 type DocumentRepo struct {
-	db     *storage.DB
-	logger logging.Logger
+	db *db.Conn
 }
 
+var _ document.Repo = (*DocumentRepo)(nil)
+
 // NewDocumentRepo creates a new document repo
-func NewDocumentRepo(db *storage.DB, logger logging.Logger) *DocumentRepo {
+func NewDocumentRepo(db *db.Conn) *DocumentRepo {
 	return &DocumentRepo{
-		db:     db,
-		logger: logger,
+		db: db,
 	}
 }
 
 // Save stores a document
 func (r *DocumentRepo) Save(_ entity.Document) error {
-	r.logger.Log("Saving document")
+	fmt.Print("Saving document to database")
 	return nil
 }
 
 // FindByID retrieves a document by ID
 func (r *DocumentRepo) FindByID(id int64) (*entity.Document, error) {
-	r.logger.Log("Finding document by ID")
+	fmt.Print("Getting document from database")
 	doc := &entity.Document{
 		ID:        id,
 		Name:      "sample.txt",
@@ -37,10 +39,4 @@ func (r *DocumentRepo) FindByID(id int64) (*entity.Document, error) {
 		CreatedAt: time.Now(),
 	}
 	return doc, nil
-}
-
-// Update modifies an existing document
-func (r *DocumentRepo) Update(_ entity.Document) error {
-	r.logger.Log("Updating document")
-	return nil
 }

@@ -1,23 +1,20 @@
 package document
 
 import (
-	"clean/adapter/logging"
 	"clean/domain/entity"
 	"clean/domain/event"
 	"time"
 )
 
 type UploadUseCase struct {
-	repo   Repo
-	pub    EventPublisher
-	logger logging.Logger
+	repo Repo
+	pub  EventPublisher
 }
 
-func NewUploadUseCase(repo Repo, events EventPublisher, logger logging.Logger) *UploadUseCase {
+func NewUploadUseCase(repo Repo, events EventPublisher) *UploadUseCase {
 	return &UploadUseCase{
-		repo:   repo,
-		pub:    events,
-		logger: logger,
+		repo: repo,
+		pub:  events,
 	}
 }
 
@@ -36,7 +33,6 @@ func (uc *UploadUseCase) Upload(input UploadInput) (int64, error) {
 
 	// Validate the document
 	if err := doc.ValidateForUpload(); err != nil {
-		uc.logger.Log("Document validation failed")
 		return 0, err // Return domain error directly
 	}
 
@@ -49,6 +45,5 @@ func (uc *UploadUseCase) Upload(input UploadInput) (int64, error) {
 		Timestamp:  time.Now(),
 	})
 
-	uc.logger.Log("Document uploaded successfully")
 	return doc.ID, nil
 }

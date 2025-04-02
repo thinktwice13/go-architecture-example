@@ -1,10 +1,10 @@
 package main
 
 import (
-	"hex/application"
+	"hex/bootstrap"
 	"log"
 )
 
 func main() {
-	log.Fatal(application.BootstrapAndRun())
+	log.Fatal(bootstrap.RunApplication())
 }

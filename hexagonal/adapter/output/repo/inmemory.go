@@ -11,13 +11,13 @@ import (
 // InMemory implements the DocumentRepo output port
 // This is a secondary adapter that is driven by the application
 type InMemory struct {
-	db *db.DB
+	db *db.Conn
 }
 
 var _ output.DocumentRepo = (*InMemory)(nil)
 
 // NewInMemoryRepo creates a new Postgres-based document repo
-func NewInMemoryRepo(db *db.DB) output.DocumentRepo {
+func NewInMemoryRepo(db *db.Conn) output.DocumentRepo {
 	return &InMemory{db}
 }
 
