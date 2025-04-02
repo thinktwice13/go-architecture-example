@@ -1,21 +1,20 @@
 package document
 
 import (
+	adaptevent "clean/adapter/event"
 	"clean/domain/entity"
 	"clean/domain/event"
+	"clean/domain/repo"
 	"time"
 )
 
 type UploadUseCase struct {
-	repo Repo
-	pub  EventPublisher
+	repo repo.DocRepo
+	pub  adaptevent.Publisher
 }
 
-func NewUploadUseCase(repo Repo, events EventPublisher) *UploadUseCase {
-	return &UploadUseCase{
-		repo: repo,
-		pub:  events,
-	}
+func NewUploadUseCase(repo repo.DocRepo, pub adaptevent.Publisher) *UploadUseCase {
+	return &UploadUseCase{repo, pub}
 }
 
 // UploadInput represents the input data for the upload use case

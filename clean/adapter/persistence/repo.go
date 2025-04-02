@@ -2,6 +2,7 @@ package persistence
 
 import (
 	"clean/domain/entity"
+	"clean/domain/repo"
 	"clean/infra/db"
 	"clean/usecase/document"
 	"fmt"
@@ -13,7 +14,7 @@ type DocumentRepo struct {
 	db *db.Conn
 }
 
-var _ document.Repo = (*DocumentRepo)(nil)
+var _ repo.DocRepo = (*DocumentRepo)(nil)
 
 // NewDocumentRepo creates a new document repo
 func NewDocumentRepo(db *db.Conn) *DocumentRepo {
