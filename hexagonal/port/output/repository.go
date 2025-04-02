@@ -1,7 +1,7 @@
 package output
 
 import (
-	"hex/core/domain"
+	"hexagonal/core/domain"
 )
 
 // DocumentRepo defines the output port for document storage

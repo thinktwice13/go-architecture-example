@@ -2,8 +2,8 @@ package http
 
 import (
 	"encoding/json"
-	"hex/core/domain"
-	"hex/port/input"
+	"hexagonal/core/domain"
+	"hexagonal/port/input"
 	"net/http"
 	"strconv"
 	"time"
@@ -24,24 +24,25 @@ func NewDocumentHandler(service input.DocumentService) *DocumentHandler {
 
 // Routes registers the HTTP routes for document operations
 func (h *DocumentHandler) Routes(r *httprouter.Router) {
-	r.POST("/documents", h.UploadDocument)
-	r.GET("/documents/:id", h.GetDocument)
+	r.POST("/documents", h.upload)
+	r.GET("/documents/:id", h.find)
 }
 
-// UploadDocument handles HTTP requests for document upload
-func (h *DocumentHandler) UploadDocument(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
-	_ = h.service.UploadDocument(domain.Document{
-		ID:   time.Now().UnixNano(),
-		Name: "sample.txt",
+// upload handles HTTP requests for document upload
+func (h *DocumentHandler) upload(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
+	_ = h.service.Upload(domain.Document{
+		ID:        time.Now().UnixNano(),
+		Name:      "sample.txt",
+		CreatedAt: time.Now().UTC(),
 	})
 
 	w.WriteHeader(http.StatusCreated)
 }
 
-// GetDocument handles HTTP requests for document retrieval
-func (h *DocumentHandler) GetDocument(w http.ResponseWriter, _ *http.Request, ps httprouter.Params) {
+// find handles HTTP requests for document retrieval
+func (h *DocumentHandler) find(w http.ResponseWriter, _ *http.Request, ps httprouter.Params) {
 	id := ps.ByName("id")
 	docID, _ := strconv.ParseInt(id, 10, 64)
-	doc, _ := h.service.GetDocument(docID)
+	doc, _ := h.service.Find(docID)
 	_ = json.NewEncoder(w).Encode(doc)
 }

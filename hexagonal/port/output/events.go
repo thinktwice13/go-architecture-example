@@ -1,7 +1,7 @@
 package output
 
 import (
-	"hex/core/domain"
+	"hexagonal/core/domain"
 )
 
 // EventPublisher defines the output port for publishing events

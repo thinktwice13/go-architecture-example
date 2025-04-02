@@ -2,7 +2,7 @@ package event
 
 import (
 	"fmt"
-	"vert/shared/domain"
+	"vertical/shared/domain"
 )
 
 type Publisher interface {

@@ -1,7 +1,6 @@
 package persistence
 
 import (
-	"clean/adapter/logging"
 	"clean/domain/entity"
 	"clean/infra/db"
 	"clean/usecase/document"

@@ -9,8 +9,8 @@ import (
 	"net/http"
 	"strconv"
 	"time"
-	"vert/shared/db"
-	"vert/shared/domain"
+	"vertical/shared/db"
+	"vertical/shared/domain"
 
 	"github.com/julienschmidt/httprouter"
 )

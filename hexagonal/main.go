@@ -1,7 +1,7 @@
 package main
 
 import (
-	"hex/bootstrap"
+	"hexagonal/bootstrap"
 	"log"
 )
 

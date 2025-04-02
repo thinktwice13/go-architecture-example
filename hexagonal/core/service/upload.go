@@ -1,9 +1,9 @@
 package service
 
 import (
-	"hex/core/domain"
-	"hex/port/input"
-	"hex/port/output"
+	"hexagonal/core/domain"
+	"hexagonal/port/input"
+	"hexagonal/port/output"
 	"time"
 )
 
@@ -32,7 +32,7 @@ func NewDocumentService(
 	return &DocumentService{repo, pub, errors}
 }
 
-func (s *DocumentService) UploadDocument(doc domain.Document) error {
+func (s *DocumentService) Upload(doc domain.Document) error {
 	if err := doc.Validate(); err != nil {
 		return s.errors.HandleError(err)
 	}
@@ -43,6 +43,6 @@ func (s *DocumentService) UploadDocument(doc domain.Document) error {
 	return nil
 }
 
-func (s *DocumentService) GetDocument(id int64) (*domain.Document, error) {
+func (s *DocumentService) Find(id int64) (*domain.Document, error) {
 	return s.repo.FindByID(id)
 }

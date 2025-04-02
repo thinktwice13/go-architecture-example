@@ -2,8 +2,8 @@ package upload
 
 import (
 	"fmt"
-	"vert/shared/db"
-	"vert/shared/domain"
+	"vertical/shared/db"
+	"vertical/shared/domain"
 )
 
 type Repo struct {

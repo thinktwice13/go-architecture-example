@@ -2,10 +2,10 @@ package bootstrap
 
 import (
 	"net/http"
-	"vert/feature/retrieve"
-	"vert/feature/upload"
-	"vert/shared/db"
-	"vert/shared/event"
+	"vertical/feature/retrieve"
+	"vertical/feature/upload"
+	"vertical/shared/db"
+	"vertical/shared/event"
 
 	"github.com/julienschmidt/httprouter"
 )

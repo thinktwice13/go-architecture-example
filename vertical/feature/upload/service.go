@@ -2,8 +2,8 @@ package upload
 
 import (
 	"time"
-	"vert/shared/domain"
-	"vert/shared/event"
+	"vertical/shared/domain"
+	"vertical/shared/event"
 )
 
 type Service struct {

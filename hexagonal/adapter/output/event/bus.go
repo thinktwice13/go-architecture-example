@@ -2,8 +2,8 @@ package event
 
 import (
 	"fmt"
-	"hex/core/domain"
-	"hex/port/output"
+	"hexagonal/core/domain"
+	"hexagonal/port/output"
 )
 
 // Bus implements EventPublisher

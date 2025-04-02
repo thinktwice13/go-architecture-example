@@ -2,7 +2,7 @@ package main
 
 import (
 	"log"
-	"vert/bootstrap"
+	"vertical/bootstrap"
 )
 
 func main() {

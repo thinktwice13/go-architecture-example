@@ -6,8 +6,6 @@ import (
 
 // ProcessingResult represents the outcome of document processing
 type ProcessingResult struct {
-	Document      Document
-	WordCount     int
-	ProcessedAt   time.Time
-	ExtractedData map[string]interface{}
+	Document    Document
+	ProcessedAt time.Time
 }

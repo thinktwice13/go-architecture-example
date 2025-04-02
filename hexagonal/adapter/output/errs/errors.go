@@ -2,7 +2,7 @@ package errs
 
 import (
 	"fmt"
-	"hex/port/output"
+	"hexagonal/port/output"
 )
 
 // Handler implements the Handler output port
@@ -10,8 +10,8 @@ type Handler struct{}
 
 var _ output.ErrorHandler = (*Handler)(nil)
 
-// NewErrorHandler creates a new error handler with logging
-func NewErrorHandler() output.ErrorHandler {
+// NewHandler creates a new error handler with logging
+func NewHandler() output.ErrorHandler {
 	return &Handler{}
 }
 

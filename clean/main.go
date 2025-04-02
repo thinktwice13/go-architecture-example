@@ -1,7 +1,6 @@
 package main
 
 import (
-	"clean/app"
 	"clean/bootstrap"
 	"log"
 )

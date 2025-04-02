@@ -5,9 +5,9 @@ package upload
 import (
 	"net/http"
 	"time"
-	"vert/shared/db"
-	"vert/shared/domain"
-	"vert/shared/event"
+	"vertical/shared/db"
+	"vertical/shared/domain"
+	"vertical/shared/event"
 
 	"github.com/julienschmidt/httprouter"
 )

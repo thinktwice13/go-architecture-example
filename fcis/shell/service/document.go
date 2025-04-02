@@ -1,6 +1,7 @@
 package service
 
 import (
+	"errors"
 	"fcis/core/document"
 )
 
@@ -18,8 +19,9 @@ func NewDocumentService(store DocumentStore) *DocumentService {
 
 func (ds *DocumentService) UploadDocument(doc document.Document) error {
 	// Validate is a core function without side effects
-	if err := document.Validate(doc); err != nil {
-		return err
+	validationResult := document.Validate(doc)
+	if !validationResult.IsValid {
+		return errors.New("validation failed")
 	}
 
 	// Storage depends on the infrastructure

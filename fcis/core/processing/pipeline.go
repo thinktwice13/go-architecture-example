@@ -2,7 +2,6 @@ package processing
 
 import (
 	"fcis/core/document"
-	"fcis/core/metadata"
 	"time"
 )
 
@@ -19,9 +18,7 @@ func ProcessDocument(doc document.Document) document.ProcessingResult {
 
 	// Return processing result
 	return document.ProcessingResult{
-		Document:      processedDoc,
-		WordCount:     wordCount,
-		ProcessedAt:   time.Now().UTC(),
-		ExtractedData: extractedData,
+		Document:    processedDoc,
+		ProcessedAt: time.Now().UTC(),
 	}
 }
