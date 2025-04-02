@@ -34,7 +34,6 @@ func (h *DocumentHandler) Upload(w http.ResponseWriter, r *http.Request, _ httpr
 func (h *DocumentHandler) Get(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	id := ps.ByName("id")
 	docID, _ := strconv.ParseInt(id, 10, 64)
-	doc, _ := h.retrieveUseCase.Retrieve(r.Context(), docID)
-	w.Header().Set("Content-Type", "application/json")
+	doc, _ := h.retrieveUseCase.Retrieve(docID)
 	_ = json.NewEncoder(w).Encode(doc)
 }

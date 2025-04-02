@@ -12,8 +12,6 @@ This repo demonstrates different architectural approaches to building the same a
 Each implementation delivers identical functionality:
 - [x] Uploading documents
 - [ ] Retrieving document details
-- [ ] Listing all documents
-- [ ] Manually triggering document processing
 
 ## Architectural Implementations
 
@@ -85,16 +83,8 @@ Each implementation delivers identical functionality:
 - When different features have different technical requirements or complexities
 - For teams with full-stack developers responsible for entire features
 
-## Key Implementation Differences
-### Todos
-- [ ] Error handling
-- [ ] Dependency injection
-- [ ] Domain events
-- [ ] Testing
-- [ ] Command/Query handling
-
 ## Prerequisites
-- Go 1.19 or later
+- Go 1.24 or later
 - Make (optional, for convenience)
 
 ### Building and Running

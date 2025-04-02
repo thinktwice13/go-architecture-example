@@ -31,15 +31,11 @@ func (uc *UploadUseCase) Upload(input UploadInput) (int64, error) {
 		CreatedAt: time.Now(),
 	}
 
-	// Validate the document
 	if err := doc.ValidateForUpload(); err != nil {
 		return 0, err // Return domain error directly
 	}
 
-	// Store the document
 	_ = uc.repo.Save(doc)
-
-	// Publish event
 	_ = uc.pub.Publish(event.DocumentUploaded{
 		DocumentID: doc.ID,
 		Timestamp:  time.Now(),
