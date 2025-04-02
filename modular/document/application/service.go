@@ -7,8 +7,8 @@ import (
 	"time"
 )
 
-// UploadService implements document upload functionality
-type UploadService struct {
+// DocumentService implements document upload functionality
+type DocumentService struct {
 	documentRepo domain.DocumentRepo
 	bus          EventPublisher
 }
@@ -18,18 +18,18 @@ type EventPublisher interface {
 	Publish(event commondomain.DomainEvent) error
 }
 
-var _ api.DocumentService = (*UploadService)(nil)
+var _ api.DocumentService = (*DocumentService)(nil)
 
-// NewUploadService creates a new upload service
-func NewUploadService(repo domain.DocumentRepo, eventBus EventPublisher) *UploadService {
-	return &UploadService{
+// NewDocumentService creates a new upload service
+func NewDocumentService(repo domain.DocumentRepo, eventBus EventPublisher) *DocumentService {
+	return &DocumentService{
 		documentRepo: repo,
 		bus:          eventBus,
 	}
 }
 
 // UploadDocument handles the document upload process
-func (s *UploadService) UploadDocument(request api.UploadRequest) error {
+func (s *DocumentService) UploadDocument(request api.UploadRequest) error {
 	doc := domain.NewDocument(request.Name)
 	doc.ID = time.Now().UnixNano()
 
@@ -50,7 +50,7 @@ func (s *UploadService) UploadDocument(request api.UploadRequest) error {
 }
 
 // GetDocument retrieves a document by its ID
-func (s *UploadService) GetDocument(id int64) (*api.DocumentDTO, error) {
+func (s *DocumentService) GetDocument(id int64) (*api.DocumentDTO, error) {
 	doc, err := s.documentRepo.FindByID(id)
 	if err != nil {
 		return nil, err

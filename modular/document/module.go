@@ -34,6 +34,8 @@ func (m *Module) Name() string {
 
 // Init initializes the module
 func (m *Module) Init() error {
+	// TODO: Initialize the module
+
 	return nil
 }
 
