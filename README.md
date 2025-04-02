@@ -14,6 +14,14 @@ This repository demonstrates different architectural approaches in Go through co
 - A demonstration of domain modeling or information flow patterns
 - A production-ready system
 
+## App Overview
+- Document uploads
+- Document retrieval
+- Http handler as input
+- Mocked database as output
+- Mocked eventbus as input/output
+- App bootstrapping
+
 ## Prerequisites
 
 - Go 1.24 or later
@@ -29,7 +37,6 @@ or
 ```bash
 make setup
 ```
-
 
 #### Running the Examples
 
