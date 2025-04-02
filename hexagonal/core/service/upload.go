@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	_ input.Http = (*DocumentService)(nil)
+	_ input.DocumentService = (*DocumentService)(nil)
 )
 
 // DocumentService implements the input ports (use cases) for document operations

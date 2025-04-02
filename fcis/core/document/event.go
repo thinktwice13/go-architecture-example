@@ -13,3 +13,11 @@ type Event struct {
 	Document  Document
 	Timestamp time.Time
 }
+
+func NewUploadedEvent(doc Document) Event {
+	return Event{
+		EventType: EventTypeUploaded,
+		Document:  doc,
+		Timestamp: time.Now().UTC(),
+	}
+}

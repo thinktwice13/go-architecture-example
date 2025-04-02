@@ -4,7 +4,6 @@ import (
 	"fcis/core/document"
 	"fcis/shell/service"
 	"net/http"
-	"time"
 
 	"github.com/julienschmidt/httprouter"
 )
@@ -22,12 +21,7 @@ func NewUploadHandler(uploadService *service.UploadService) *UploadHandler {
 
 // Handle processes the HTTP request
 func (h *UploadHandler) Handle(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	_ = h.uploadService.UploadDocument(document.Document{
-		ID:        time.Now().UnixNano(),
-		Name:      "sample.txt",
-		CreatedAt: time.Now(),
-		Status:    "new",
-	})
+	_ = h.uploadService.UploadDocument(document.New("sample.txt"))
 
 	w.WriteHeader(http.StatusCreated)
 }

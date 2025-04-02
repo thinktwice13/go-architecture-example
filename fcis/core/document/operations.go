@@ -54,3 +54,8 @@ func ValidateForStorage(doc Document) ValidationResult {
 
 	return result
 }
+
+func UpdateStatus(doc Document, status string) Document {
+	doc.Status = status
+	return doc
+}

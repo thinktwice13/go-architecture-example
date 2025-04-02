@@ -15,7 +15,7 @@ type DocumentService struct {
 
 // EventPublisher defines the event publishing interface
 type EventPublisher interface {
-	Publish(event commondomain.DomainEvent) error
+	Publish(event commondomain.Event) error
 }
 
 var _ api.DocumentService = (*DocumentService)(nil)
@@ -39,7 +39,7 @@ func (s *DocumentService) UploadDocument(request api.UploadRequest) error {
 	// Publish an event after saving the document
 	evt := domain.DocumentUploaded{
 		BaseEvent: commondomain.BaseEvent{
-			Type:      "DocumentUploaded",
+			Type:      commondomain.EventDocumentUploaded,
 			Timestamp: time.Now().UTC(),
 		},
 		DocumentID: doc.ID,

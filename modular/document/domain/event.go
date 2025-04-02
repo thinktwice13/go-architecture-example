@@ -5,12 +5,12 @@ import (
 	"time"
 )
 
-var _ domain.DomainEvent = (*DocumentUploaded)(nil)
+var _ domain.Event = (*DocumentUploaded)(nil)
 
 // DocumentUploaded is an event that occurs when a document is uploaded
 type DocumentUploaded struct {
 	domain.BaseEvent
-	DocumentID int64
+	DocumentID int64 `json:"documentId"`
 }
 
 // EventName returns the name of the event

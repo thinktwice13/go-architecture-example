@@ -1,6 +1,6 @@
 # Go Architecture Patterns
 
-This repository demonstrates different architectural approaches in Go through consistent implementations of a simplified domain. Each implementation showcases the structural patterns, component organization, and dependency flows that characterize a specific architectural style.
+This repository demonstrates different architectural approaches in Go through consistent implementations of a simplified document processing app. Each implementation showcases the structural patterns, component organization, and dependency flows that characterize a specific architectural style.
 
 ## What This Is
 
