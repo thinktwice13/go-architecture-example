@@ -12,8 +12,6 @@ This repo demonstrates different architectural approaches to building the same a
 Each implementation delivers identical functionality:
 - [x] Uploading documents
 - [ ] Retrieving document details
-- [ ] Listing all documents
-- [ ] Manually triggering document processing
 
 ## Architectural Implementations
 
@@ -21,14 +19,12 @@ Each implementation delivers identical functionality:
 
 #### Key Characteristics
 - Clear separation of concerns with concentric layers
-- Dependencies point inward - domain has no dependencies
-- Use cases orchestrate domain operations
-- Interfaces adapt between use cases and external systems
+- Usecases orchestrate domain operations
+- Adapters tie use cases to infrastructure
 - Strong encapsulation of business rules
 
 #### When to Use
 - For complex business domains with rich behavior
-- When business rules need protection from infrastructure changes
 - For systems expected to evolve over many years
 - When maximizing testability of business logic is critical
 - For teams with clear separation between domain experts and infrastructure specialists
@@ -85,40 +81,25 @@ Each implementation delivers identical functionality:
 - When different features have different technical requirements or complexities
 - For teams with full-stack developers responsible for entire features
 
-## Key Implementation Differences
-### Todos
-- [ ] Error handling
-- [ ] Dependency injection
-- [ ] Domain events
-- [ ] Testing
-- [ ] Command/Query handling
-
 ## Prerequisites
-- Go 1.19 or later
+- Go 1.24 or later
 - Make (optional, for convenience)
 
 ### Building and Running
 
 To run implementations change to the respective directory and run `go run .`:
 
-The servers runs on http://localhost:8080
+The servers is on http://localhost:8080. All implementations expose identical API endpoints:
 
-## API Endpoints
+- `POST /documents` - Upload a document
+- `GET /documents/:id` - Get document details
 
-All implementations expose identical API endpoints:
-
-- `POST /` - Upload a document
-- `GET /{id}` - Get document details
-- `GET /{id}/status` - Get processing status
-- `POST /{id}/process` - Manually trigger processing
-
-## Testing
+## [TODO] Testing
 
 Each implementation includes examples of:
-
-- Unit tests: Testing business logic in isolation
-- Integration tests: Testing repository interactions
-- E2E tests: Testing API endpoints
+- Unit test
+- Integration test
+- E2E test
 
 Run tests with:
 

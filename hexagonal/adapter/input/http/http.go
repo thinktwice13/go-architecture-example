@@ -43,7 +43,5 @@ func (h *DocumentHandler) GetDocument(w http.ResponseWriter, _ *http.Request, ps
 	id := ps.ByName("id")
 	docID, _ := strconv.ParseInt(id, 10, 64)
 	doc, _ := h.service.GetDocument(docID)
-
-	w.Header().Set("Content-Type", "application/json")
 	_ = json.NewEncoder(w).Encode(doc)
 }

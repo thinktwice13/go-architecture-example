@@ -27,12 +27,6 @@ func New(router *httprouter.Router, db *db.Conn, pub *event.Bus) {
 		}
 
 		_ = svc.UploadDocument(doc)
-		_ = pub.Publish(domain.DocumentEvent{
-			Type:      domain.EventDocumentUploaded,
-			Document:  &doc,
-			Timestamp: time.Time{}.UTC(),
-		})
-
 		w.WriteHeader(http.StatusCreated)
 	})
 }
