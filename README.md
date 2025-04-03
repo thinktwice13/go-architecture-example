@@ -30,7 +30,7 @@ This repository demonstrates different architectural approaches in Go through co
 
 #### Setup
 ```bash
-cd [clean|hexagonal|fcis|modular|vertical]
+cd [clean|hexagonal|modular|vertical]
 go mod tody
 ```
 or
@@ -42,7 +42,7 @@ make setup
 
 Each architectural approach is implemented in its own directory. To run any specific example:
 ```bash
-cd [clean|hexagonal|fcis|modular|vertical]
+cd [clean|hexagonal|modular|vertical]
 go run .
 ```
 
@@ -56,7 +56,7 @@ Available at `http://localhost:8080`. Available routes:
 To run tests for a specific architecture:
 
 ```bash
-cd [clean|hexagonal|fcis|modular|vertical]
+cd [clean|hexagonal|modular|vertical]
 go test ./...
 ```
 or
@@ -80,13 +80,6 @@ Core Principles:
 - Ports define interfaces for external communication
 - Adapters implement port interfaces
 - Clear distinction between "driving" and "driven" sides
-
-### Functional Core, Imperative Shell (FCIS)
-
-Core Principles:
-- Pure functional core with domain logic
-- Side effects isolated in the imperative shell
-- Functional core has no dependencies on external systems
 
 ### Modular Architecture
 
@@ -117,17 +110,6 @@ Differences:
 - Clean focuses on use case organization
 - Hexagonal emphasizes the application boundary
 - Clean typically has more explicit layers
-
-### Hexagonal vs. FCIS
-
-Similarities:
-- Both isolate domain logic
-- Both define clear boundaries
-
-Differences:
-- FCIS focuses on pure functions vs. side effects
-- Hexagonal focuses on interface boundaries
-- FCIS typically has more immutable data structures
 
 ### Modular vs. Vertical Slice
 
@@ -175,23 +157,6 @@ Weaknesses:
 Use Cases:
 - Applications with multiple UIs or data sources
 - Systems requiring high adaptability to external changes
-
-### Functional Core, Imperative Shell
-
-Strengths:
-- Highly testable domain logic
-- Clear separation of side effects
-- Simplified reasoning about business rules
-
-Weaknesses:
-- Requires functional programming discipline
-- May feel unfamiliar to OOP-oriented teams
-- Potential data copying overhead
-
-Use Cases:
-- Systems with complex business rules
-- Applications benefiting from immutability
-- Projects requiring extensive unit testing
 
 ### Modular Architecture
 
