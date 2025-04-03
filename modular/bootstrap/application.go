@@ -1,6 +1,7 @@
 package boostrap
 
 import (
+	"hexagonal/core/config"
 	"modular/common/infra/db"
 	"modular/common/infra/event"
 	"modular/common/module"
@@ -12,6 +13,7 @@ import (
 
 func RunApplication() error {
 	// Infra
+	_ = config.Load()
 	dbConn := &db.Conn{}
 	eb := &event.Bus{}
 	router := httprouter.New()

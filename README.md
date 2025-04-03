@@ -1,4 +1,4 @@
-# Go Architecture Patterns
+# go-architecture-example
 
 This repository demonstrates different architectural approaches in Go through consistent implementations of a simplified document processing app. Each implementation showcases the structural patterns, component organization, and dependency flows that characterize a specific architectural style.
 

@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"vertical/feature/retrieve"
 	"vertical/feature/upload"
+	"vertical/shared/config"
 	"vertical/shared/db"
 	"vertical/shared/event"
 
@@ -12,13 +13,17 @@ import (
 
 func RunApplication() error {
 	// Infra
-	router := httprouter.New() // input
-	store := &db.Conn{}        // output
-	eb := &event.Bus{}         // both input and output
+	_ = config.Load()
+	store := &db.Conn{}
 
-	// Domain
+	// Common driven services and workers
+	eb := &event.Bus{}
+
+	// Core services with dependencies
+	router := httprouter.New()
 	upload.New(router, store, eb)
 	retrieve.New(router, store)
 
+	// Start
 	return http.ListenAndServe(":8080", router)
 }

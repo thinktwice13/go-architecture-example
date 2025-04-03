@@ -5,8 +5,9 @@ import (
 	"hexagonal/adapter/input/server"
 	"hexagonal/adapter/output/db"
 	"hexagonal/adapter/output/errs"
-	events "hexagonal/adapter/output/event"
+	"hexagonal/adapter/output/event"
 	"hexagonal/adapter/output/repo"
+	"hexagonal/core/config"
 	"hexagonal/core/service"
 
 	"github.com/julienschmidt/httprouter"
@@ -14,18 +15,21 @@ import (
 
 func RunApplication() error {
 	// Infra
+	_ = config.Load()
 	store := &db.Conn{}
-	eb := &events.Bus{}
 
-	// Services
+	// Driven Services
+	eb := &event.Bus{}
 	docRepo := repo.NewInMemory(store)
 	errHandler := errs.NewHandler()
+
+	// Core Services
 	svc := service.NewDocumentService(docRepo, eb, errHandler)
-	httpHandler := apphttp.NewDocumentHandler(svc)
+
+	// Drivers
 	router := httprouter.New()
-	httpHandler.Routes(router)
+	apphttp.NewDocumentHandler(svc, router)
 
 	// Start
-	srv := server.NewServer(router)
-	return srv.Start()
+	return server.NewServer(router).Start()
 }

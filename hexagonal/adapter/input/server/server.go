@@ -9,7 +9,7 @@ type Server struct {
 }
 
 func NewServer(router http.Handler) *Server {
-	return &Server{router: router}
+	return &Server{router}
 }
 
 func (s *Server) Start() error {

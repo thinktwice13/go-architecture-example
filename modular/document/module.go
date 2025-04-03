@@ -20,11 +20,7 @@ type Module struct {
 
 // NewModule creates a new document module
 func NewModule(name string, db *db.Conn, eventBus *event.Bus) *Module {
-	return &Module{
-		name:     name,
-		db:       db,
-		eventBus: eventBus,
-	}
+	return &Module{name, db, eventBus, nil}
 }
 
 // Name returns the name of the module

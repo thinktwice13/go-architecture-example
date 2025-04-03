@@ -18,17 +18,13 @@ type DocumentHandler struct {
 }
 
 // NewDocumentHandler creates a new document HTTP handler
-func NewDocumentHandler(service input.DocumentService) *DocumentHandler {
-	return &DocumentHandler{service}
-}
-
-// Routes registers the HTTP routes for document operations
-func (h *DocumentHandler) Routes(r *httprouter.Router) {
+func NewDocumentHandler(service input.DocumentService, r *httprouter.Router) *DocumentHandler {
+	h := &DocumentHandler{service}
 	r.POST("/documents", h.upload)
 	r.GET("/documents/:id", h.find)
+	return h
 }
 
-// upload handles HTTP requests for document upload
 func (h *DocumentHandler) upload(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
 	_ = h.service.Upload(domain.Document{
 		ID:        time.Now().UnixNano(),
@@ -39,7 +35,6 @@ func (h *DocumentHandler) upload(w http.ResponseWriter, _ *http.Request, _ httpr
 	w.WriteHeader(http.StatusCreated)
 }
 
-// find handles HTTP requests for document retrieval
 func (h *DocumentHandler) find(w http.ResponseWriter, _ *http.Request, ps httprouter.Params) {
 	id := ps.ByName("id")
 	docID, _ := strconv.ParseInt(id, 10, 64)
