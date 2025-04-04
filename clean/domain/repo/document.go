@@ -8,5 +8,5 @@ import (
 // This is shared between multiple use cases that operate on the same entity
 type DocRepo interface {
 	Save(doc entity.Document) error
-	FindByID(id int64) (*entity.Document, error)
+	FindByID(id string) (*entity.Document, error)
 }

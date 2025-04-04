@@ -5,7 +5,6 @@ import (
 	"layered/business/service"
 	"layered/data/model"
 	"net/http"
-	"strconv"
 	"time"
 
 	"github.com/julienschmidt/httprouter"
@@ -21,7 +20,7 @@ func NewDocumentHandler(svc *service.DocumentService) *Document {
 
 func (d *Document) HandleUpload(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
 	_ = d.svc.Upload(model.Document{
-		ID:        time.Now().UnixNano(),
+		ID:        time.Now().Format("20060102150405"),
 		Name:      "sample.txt",
 		Status:    "new",
 		CreatedAt: time.Now().UTC(),
@@ -30,8 +29,6 @@ func (d *Document) HandleUpload(w http.ResponseWriter, _ *http.Request, _ httpro
 }
 
 func (d *Document) HandleFind(w http.ResponseWriter, _ *http.Request, ps httprouter.Params) {
-	id := ps.ByName("id")
-	docID, _ := strconv.ParseInt(id, 10, 64)
-	doc, _ := d.svc.FindByID(docID)
+	doc, _ := d.svc.FindByID(ps.ByName("id"))
 	_ = json.NewEncoder(w).Encode(doc)
 }

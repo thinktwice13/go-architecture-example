@@ -3,7 +3,7 @@ package model
 import "time"
 
 type Document struct {
-	ID        int64
+	ID        string
 	Name      string
 	Status    string
 	CreatedAt time.Time

@@ -10,7 +10,7 @@ var _ domain.Event = (*DocumentUploaded)(nil)
 // DocumentUploaded is an event that occurs when a document is uploaded
 type DocumentUploaded struct {
 	domain.BaseEvent
-	DocumentID int64 `json:"documentId"`
+	DocumentID string `json:"documentId"`
 }
 
 // EventName returns the name of the event

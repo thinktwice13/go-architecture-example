@@ -5,6 +5,8 @@ import (
 	"modular/common/infra/event"
 	"modular/common/module"
 	"modular/document/api"
+	"modular/document/application"
+	"modular/document/repo"
 
 	"github.com/julienschmidt/httprouter"
 )
@@ -12,51 +14,25 @@ import (
 var _ module.Interface = (*Module)(nil)
 
 type Module struct {
-	name        string
-	db          *db.Conn
-	eventBus    *event.Bus
-	httpHandler *api.HTTPHandler
+	name     string
+	db       *db.Conn
+	eventBus *event.Bus
+	router   *httprouter.Router
 }
 
 // NewModule creates a new document module
-func NewModule(name string, db *db.Conn, eventBus *event.Bus) *Module {
-	return &Module{name, db, eventBus, nil}
+func NewModule(name string, db *db.Conn, eventBus *event.Bus, router *httprouter.Router) *Module {
+	return &Module{name, db, eventBus, router}
 }
 
-// Name returns the name of the module
 func (m *Module) Name() string {
 	return m.name
 }
 
-// Init initializes the module
-func (m *Module) Init() error {
-	// TODO: Initialize the module
-
-	return nil
-}
-
-// Start starts the module
 func (m *Module) Start() error {
-	// Start services and infrastructure
+	docRepo := repo.NewRepo(m.db)
+	svc := application.NewDocumentService(docRepo, m.eventBus)
+	apiHandler := api.NewHTTPHandler(svc)
+	apiHandler.RegisterRoutes(m.router)
 	return nil
-}
-
-// Stop stops the module
-func (m *Module) Stop() error {
-	// Stop the services and infrastructure
-	return nil
-}
-
-// GetHTTPHandler returns the HTTP handler for the module
-func (m *Module) GetHTTPHandler() *api.HTTPHandler {
-	return m.httpHandler
-}
-
-func (m *Module) SetupRoutes(router *httprouter.Router) {
-	m.httpHandler.RegisterRoutes(router)
-}
-
-// RegisterEventHandlers here to satisfy module.Interface
-func (*Module) RegisterEventHandlers() {
-	// Register event handlers here
 }

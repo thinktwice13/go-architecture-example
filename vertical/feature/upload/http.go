@@ -20,7 +20,7 @@ func New(router *httprouter.Router, db *db.Conn, pub *event.Bus) {
 	router.POST("/documents", func(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		// Validation...
 		doc := domain.Document{
-			ID:        time.Now().UnixNano(),
+			ID:        time.Now().Format("20060102150405"),
 			Name:      "sample.txt",
 			Status:    "new",
 			CreatedAt: time.Now().UTC(),

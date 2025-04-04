@@ -22,19 +22,12 @@ var _ api.DocumentService = (*DocumentService)(nil)
 
 // NewDocumentService creates a new upload service
 func NewDocumentService(repo domain.DocumentRepo, eventBus EventPublisher) *DocumentService {
-	return &DocumentService{
-		documentRepo: repo,
-		bus:          eventBus,
-	}
+	return &DocumentService{repo, eventBus}
 }
 
 // UploadDocument handles the document upload process
-func (s *DocumentService) UploadDocument(request api.UploadRequest) error {
-	doc := domain.NewDocument(request.Name)
-	doc.ID = time.Now().UnixNano()
-
-	// Save the document to the repository
-	_ = s.documentRepo.Save(*doc)
+func (s *DocumentService) UploadDocument(doc domain.Document) error {
+	_ = s.documentRepo.Save(doc)
 
 	// Publish an event after saving the document
 	evt := domain.DocumentUploaded{
@@ -50,16 +43,7 @@ func (s *DocumentService) UploadDocument(request api.UploadRequest) error {
 }
 
 // GetDocument retrieves a document by its ID
-func (s *DocumentService) GetDocument(id int64) (*api.DocumentDTO, error) {
-	doc, err := s.documentRepo.FindByID(id)
-	if err != nil {
-		return nil, err
-	}
-
-	return &api.DocumentDTO{
-		ID:        doc.ID,
-		Name:      doc.Name,
-		Status:    doc.Status,
-		CreatedAt: doc.CreatedAt,
-	}, nil
+func (s *DocumentService) GetDocument(id string) (*domain.Document, error) {
+	doc, _ := s.documentRepo.FindByID(id)
+	return doc, nil
 }

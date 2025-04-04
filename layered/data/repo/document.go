@@ -20,10 +20,10 @@ func (*Document) Save(_ model.Document) error {
 	return nil
 }
 
-func (*Document) FindByID(_ int64) (*model.Document, error) {
+func (*Document) FindByID(_ string) (*model.Document, error) {
 	fmt.Println("Finding document in the database")
 	return &model.Document{
-		ID:        1,
+		ID:        time.Now().Format("20060102150405"),
 		Name:      "sample.txt",
 		Status:    "new",
 		CreatedAt: time.Now(),

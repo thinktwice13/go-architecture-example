@@ -2,8 +2,9 @@ package api
 
 import (
 	"encoding/json"
+	"modular/document/domain"
 	"net/http"
-	"strconv"
+	"time"
 
 	"github.com/julienschmidt/httprouter"
 )
@@ -28,16 +29,17 @@ func (h *HTTPHandler) RegisterRoutes(router *httprouter.Router) {
 
 // uploadDocument handles document upload requests
 func (h *HTTPHandler) uploadDocument(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
-	_ = h.documentService.UploadDocument(UploadRequest{
-		Name: "sample.txt",
+	_ = h.documentService.UploadDocument(domain.Document{
+		ID:        time.Now().Format("20060102150405"),
+		Name:      "sample.txt",
+		Status:    "new",
+		CreatedAt: time.Now().UTC(),
 	})
 	w.WriteHeader(http.StatusCreated)
 }
 
 // getDocument handles document retrieval requests
 func (h *HTTPHandler) getDocument(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	id := ps.ByName("id")
-	docID, _ := strconv.ParseInt(id, 10, 64)
-	document, _ := h.documentService.GetDocument(docID)
+	document, _ := h.documentService.GetDocument(ps.ByName("id"))
 	_ = json.NewEncoder(w).Encode(document)
 }

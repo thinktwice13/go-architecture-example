@@ -1,9 +1,13 @@
 package event
 
+import (
+	"fmt"
+	"modular/common/domain"
+)
+
 type Bus struct{}
 
-func (*Bus) Publish(event interface{}) error {
-	// Implement the logic to publish the event to the event bus
-	// This could involve sending the event to a message queue, etc.
+func (*Bus) Publish(domain.Event) error {
+	fmt.Println("Publishing event...")
 	return nil
 }

@@ -5,23 +5,23 @@ import (
 )
 
 type DocumentEvent interface {
-	GetDocumentID() int64
+	GetDocumentID() string
 }
 
 type DocumentUploaded struct {
-	DocumentID int64
+	DocumentID string
 	Timestamp  time.Time
 }
 
-func (e DocumentUploaded) GetDocumentID() int64 {
+func (e DocumentUploaded) GetDocumentID() string {
 	return e.DocumentID
 }
 
 type DocumentRetrieved struct {
-	DocumentID int64
+	DocumentID string
 	Timestamp  time.Time
 }
 
-func (e DocumentRetrieved) GetDocumentID() int64 {
+func (e DocumentRetrieved) GetDocumentID() string {
 	return e.DocumentID
 }

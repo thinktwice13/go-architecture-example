@@ -20,22 +20,13 @@ func RunApplication() error {
 
 	// Modules
 	modules := []module.Interface{
-		document.NewModule("document", dbConn, eb),
-		// processing.NewModule(db, eventBus),
+		document.NewModule("document", dbConn, eb, router),
+		// processing.NewModule(....)
 	}
 
+	// Start modules
 	for _, mod := range modules {
 		_ = mod.Start()
-	}
-
-	// Register routes
-	for _, mod := range modules {
-		mod.SetupRoutes(router)
-	}
-
-	// Register event handlers
-	for _, mod := range modules {
-		mod.RegisterEventHandlers()
 	}
 
 	// Start server

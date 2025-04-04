@@ -5,7 +5,6 @@ import (
 	"clean/usecase/document"
 	"encoding/json"
 	"net/http"
-	"strconv"
 	"time"
 
 	"github.com/julienschmidt/httprouter"
@@ -27,7 +26,7 @@ func NewDocumentHandler(
 
 func (h *DocumentHandler) Upload(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	_, _ = h.uploads.Upload(entity.Document{
-		ID:        time.Now().UnixNano(),
+		ID:        time.Now().Format("20060102150405"),
 		Name:      "sample.txt",
 		Status:    "new",
 		CreatedAt: time.Now().UTC(),
@@ -36,8 +35,6 @@ func (h *DocumentHandler) Upload(w http.ResponseWriter, r *http.Request, _ httpr
 }
 
 func (h *DocumentHandler) Get(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	id := ps.ByName("id")
-	docID, _ := strconv.ParseInt(id, 10, 64)
-	doc, _ := h.retrievals.Retrieve(docID)
+	doc, _ := h.retrievals.Retrieve(ps.ByName("id"))
 	_ = json.NewEncoder(w).Encode(doc)
 }

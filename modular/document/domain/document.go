@@ -7,7 +7,7 @@ import (
 
 // Document represents a document in the system
 type Document struct {
-	ID        int64
+	ID        string
 	Name      string
 	Status    string
 	CreatedAt time.Time

@@ -12,11 +12,9 @@ type RetrieveUseCase struct {
 }
 
 func NewRetrieveUseCase(repo repo.DocRepo) *RetrieveUseCase {
-	return &RetrieveUseCase{
-		repo: repo,
-	}
+	return &RetrieveUseCase{repo}
 }
 
-func (uc *RetrieveUseCase) Retrieve(id int64) (*entity.Document, error) {
+func (uc *RetrieveUseCase) Retrieve(id string) (*entity.Document, error) {
 	return uc.repo.FindByID(id)
 }

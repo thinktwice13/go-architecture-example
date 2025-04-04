@@ -22,7 +22,7 @@ func (s *DocumentService) Upload(doc model.Document) error {
 	return s.repo.Save(doc)
 }
 
-func (s *DocumentService) FindByID(id int64) (*model.Document, error) {
+func (s *DocumentService) FindByID(id string) (*model.Document, error) {
 	return s.repo.FindByID(id)
 }
 

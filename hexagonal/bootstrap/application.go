@@ -1,11 +1,11 @@
 package bootstrap
 
 import (
+	"hexagonal/adapter/eventbus"
 	apphttp "hexagonal/adapter/input/http"
 	"hexagonal/adapter/input/server"
 	"hexagonal/adapter/output/db"
 	"hexagonal/adapter/output/errs"
-	"hexagonal/adapter/output/event"
 	"hexagonal/adapter/output/repo"
 	"hexagonal/core/config"
 	"hexagonal/core/service"
@@ -19,8 +19,8 @@ func RunApplication() error {
 	store := &db.Conn{}
 
 	// Driven Services
-	eb := &event.Bus{}
-	docRepo := repo.NewInMemory(store)
+	eb := &eventbus.Bus{}
+	docRepo := repo.NewRepo(store)
 	errHandler := errs.NewHandler()
 
 	// Core Services

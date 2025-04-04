@@ -32,6 +32,6 @@ func (s *DocumentService) Upload(doc domain.Document) error {
 	return nil
 }
 
-func (s *DocumentService) Find(id int64) (*domain.Document, error) {
+func (s *DocumentService) Find(id string) (*domain.Document, error) {
 	return s.repo.FindByID(id)
 }

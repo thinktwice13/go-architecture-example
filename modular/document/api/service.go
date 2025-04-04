@@ -1,7 +1,9 @@
 package api
 
+import "modular/document/domain"
+
 // DocumentService defines the public API for the documents module
 type DocumentService interface {
-	UploadDocument(request UploadRequest) error
-	GetDocument(id int64) (*DocumentDTO, error)
+	UploadDocument(domain.Document) error
+	GetDocument(id string) (*domain.Document, error)
 }

@@ -5,7 +5,6 @@ import (
 	"hexagonal/core/domain"
 	"hexagonal/port/input"
 	"net/http"
-	"strconv"
 	"time"
 
 	"github.com/julienschmidt/httprouter"
@@ -27,7 +26,7 @@ func NewDocumentHandler(service input.DocumentService, r *httprouter.Router) *Do
 
 func (h *DocumentHandler) upload(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
 	_ = h.service.Upload(domain.Document{
-		ID:        time.Now().UnixNano(),
+		ID:        time.Now().Format("20060102150405"),
 		Name:      "sample.txt",
 		CreatedAt: time.Now().UTC(),
 	})
@@ -36,8 +35,6 @@ func (h *DocumentHandler) upload(w http.ResponseWriter, _ *http.Request, _ httpr
 }
 
 func (h *DocumentHandler) find(w http.ResponseWriter, _ *http.Request, ps httprouter.Params) {
-	id := ps.ByName("id")
-	docID, _ := strconv.ParseInt(id, 10, 64)
-	doc, _ := h.service.Find(docID)
+	doc, _ := h.service.Find(ps.ByName("id"))
 	_ = json.NewEncoder(w).Encode(doc)
 }

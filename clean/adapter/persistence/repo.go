@@ -21,10 +21,10 @@ func (*DocumentRepo) Save(entity.Document) error {
 	return nil
 }
 
-func (*DocumentRepo) FindByID(id int64) (*entity.Document, error) {
+func (*DocumentRepo) FindByID(id string) (*entity.Document, error) {
 	fmt.Print("Getting document from database")
 	return &entity.Document{
-		ID:        id,
+		ID:        time.Now().Format("20060102150405"),
 		Name:      "sample.txt",
 		Status:    "new",
 		CreatedAt: time.Now(),
