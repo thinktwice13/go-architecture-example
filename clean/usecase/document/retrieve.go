@@ -15,6 +15,6 @@ func NewRetrieveUseCase(repo repo.DocRepo) *RetrieveUseCase {
 	return &RetrieveUseCase{repo}
 }
 
-func (uc *RetrieveUseCase) Retrieve(id string) (*entity.Document, error) {
+func (uc *RetrieveUseCase) Find(id string) (*entity.Document, error) {
 	return uc.repo.FindByID(id)
 }

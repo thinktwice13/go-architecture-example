@@ -5,13 +5,9 @@ import (
 	"vertical/shared/domain"
 )
 
-type Publisher interface {
-	Publish(domain.DocumentEvent) error
-}
-
 type Bus struct{}
 
-func (b *Bus) Publish(event domain.DocumentEvent) error {
-	fmt.Println("Publishing event:", event)
+func (eb *Bus) Publish(event domain.DocumentEvent) error {
+	fmt.Printf("Event \"%s\" published\n", event.Type)
 	return nil
 }

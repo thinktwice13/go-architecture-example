@@ -1,49 +1,51 @@
 package application
 
 import (
+	"encoding/json"
 	commondomain "modular/common/domain"
 	"modular/document/api"
 	"modular/document/domain"
 	"time"
 )
 
-// DocumentService implements document upload functionality
 type DocumentService struct {
 	documentRepo domain.DocumentRepo
 	bus          EventPublisher
 }
 
-// EventPublisher defines the event publishing interface
 type EventPublisher interface {
 	Publish(event commondomain.Event) error
 }
 
 var _ api.DocumentService = (*DocumentService)(nil)
 
-// NewDocumentService creates a new upload service
 func NewDocumentService(repo domain.DocumentRepo, eventBus EventPublisher) *DocumentService {
 	return &DocumentService{repo, eventBus}
 }
 
-// UploadDocument handles the document upload process
-func (s *DocumentService) UploadDocument(doc domain.Document) error {
-	_ = s.documentRepo.Save(doc)
-
-	// Publish an event after saving the document
-	evt := domain.DocumentUploaded{
-		BaseEvent: commondomain.BaseEvent{
-			Type:      commondomain.EventDocumentUploaded,
-			Timestamp: time.Now().UTC(),
-		},
-		DocumentID: doc.ID,
+func (s *DocumentService) Upload(doc domain.Document) error {
+	if err := s.documentRepo.Save(doc); err != nil {
+		return err
 	}
 
-	_ = s.bus.Publish(evt)
+	data, err := json.Marshal(doc)
+	if err != nil {
+		return err
+	}
+
+	// Uses the common event struct, but local domain event type
+	if err := s.bus.Publish(commondomain.Event{
+		EventType: domain.EventDocumentUploaded,
+		Timestamp: time.Now().UTC(),
+		Data:      data,
+	}); err != nil {
+		return err
+	}
+
 	return nil
 }
 
-// GetDocument retrieves a document by its ID
-func (s *DocumentService) GetDocument(id string) (*domain.Document, error) {
+func (s *DocumentService) Find(id string) (*domain.Document, error) {
 	doc, _ := s.documentRepo.FindByID(id)
 	return doc, nil
 }

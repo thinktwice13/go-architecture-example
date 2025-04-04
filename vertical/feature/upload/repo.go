@@ -1,7 +1,7 @@
 package upload
 
 import (
-	"fmt"
+	"encoding/json"
 	"vertical/shared/db"
 	"vertical/shared/domain"
 )
@@ -10,7 +10,11 @@ type Repo struct {
 	db *db.Conn
 }
 
-func (r *Repo) Save(_ domain.Document) error {
-	fmt.Println("Saving document ...")
+func (r *Repo) Save(doc domain.Document) error {
+	if bytes, err := json.Marshal(doc); err != nil {
+		return err
+	} else {
+		r.db.Set(doc.ID, bytes)
+	}
 	return nil
 }

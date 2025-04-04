@@ -1,6 +1,7 @@
 package repo
 
 import (
+	"encoding/json"
 	"fmt"
 	"layered/data/db"
 	"layered/data/model"
@@ -15,9 +16,12 @@ func NewDocumentRepo(db *db.Conn) *Document {
 	return &Document{db: db}
 }
 
-func (*Document) Save(_ model.Document) error {
-	fmt.Println("Saving document to the database")
-	return nil
+func (d *Document) Save(doc model.Document) error {
+	bytes, err := json.Marshal(doc)
+	if err != nil {
+		return err
+	}
+	d.db.Set(doc.ID, bytes)
 }
 
 func (*Document) FindByID(_ string) (*model.Document, error) {

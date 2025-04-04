@@ -13,7 +13,7 @@ import (
 
 func main() {
 	// Infra
-	store := &db.Conn{}
+	store := db.Connect()
 	// No eventbus in this example
 
 	// Data

@@ -7,7 +7,7 @@ import (
 
 type Bus struct{}
 
-func (*Bus) Publish(domain.Event) error {
-	fmt.Println("Publishing event...")
+func (*Bus) Publish(event domain.Event) error {
+	fmt.Printf("Event \"%s\" published\n", event.EventType)
 	return nil
 }

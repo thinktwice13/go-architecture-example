@@ -1,9 +1,8 @@
 package event
 
 import (
-	"fmt"
-
 	"clean/domain/event"
+	"fmt"
 )
 
 var _ event.Publisher = (*Bus)(nil)
@@ -11,6 +10,6 @@ var _ event.Publisher = (*Bus)(nil)
 type Bus struct{}
 
 func (eb *Bus) Publish(event event.DocumentEvent) error {
-	fmt.Printf("Publishing event: %s\n", event)
+	fmt.Printf("Event \"%s\" published\n", event.Type)
 	return nil
 }

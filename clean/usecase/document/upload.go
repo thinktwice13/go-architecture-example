@@ -4,6 +4,7 @@ import (
 	"clean/domain/entity"
 	"clean/domain/event"
 	"clean/domain/repo"
+	"encoding/json"
 	"time"
 )
 
@@ -18,18 +19,21 @@ func NewUploadUseCase(repo repo.DocRepo, pub event.Publisher) *UploadUseCase {
 	return &UploadUseCase{repo, pub}
 }
 
-func (uc *UploadUseCase) Upload(doc entity.Document) (int64, error) {
+func (uc *UploadUseCase) Upload(doc entity.Document) error {
 	if err := doc.ValidateForUpload(); err != nil {
-		return 0, err // Return domain error directly
+		return err // Return domain error directly
 	}
 
 	// Business logic ...
 
-	_ = uc.repo.Save(doc)
-	_ = uc.pub.Publish(event.DocumentUploaded{
-		DocumentID: doc.ID,
-		Timestamp:  time.Now(),
-	})
+	if err := uc.repo.Save(doc); err != nil {
+		return err // Return domain error directly
+	}
 
-	return doc.ID, nil
+	bytes, _ := json.Marshal(doc)
+	return uc.pub.Publish(event.DocumentEvent{
+		Type:      event.EventDocumentUploaded,
+		Timestamp: time.Now(),
+		Data:      bytes,
+	})
 }

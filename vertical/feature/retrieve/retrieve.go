@@ -1,5 +1,5 @@
 // Package retrieve retrieves a single document by ID
-// Vertical slices adapt to each feature's needs. Retrieve is an example of a simpler feature that doesn't require a service layer and uses different pattern to bootstrap itself.
+// Vertical slices adapt to each feature's needs. Find is an example of a simpler feature that doesn't require a service layer and uses different pattern to bootstrap itself.
 package retrieve
 
 import (
@@ -13,11 +13,11 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-type Repo struct {
+type repo struct {
 	db *db.Conn
 }
 
-func (r *Repo) FindByID(id string) (*domain.Document, error) {
+func (r *repo) findByID(id string) (*domain.Document, error) {
 	fmt.Println("Getting document from database")
 	return &domain.Document{
 		ID:        id,
@@ -29,10 +29,10 @@ func (r *Repo) FindByID(id string) (*domain.Document, error) {
 
 // New bootstraps the upload feature from low-level infrastructure components, including the router attachment.
 func New(router *httprouter.Router, db *db.Conn) {
-	repo := &Repo{db}
+	docrepo := &repo{db}
 
 	router.GET("/documents/:id", func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-		doc, _ := repo.FindByID(ps.ByName("id"))
+		doc, _ := docrepo.findByID(ps.ByName("id"))
 		w.WriteHeader(http.StatusOK)
 		_ = json.NewEncoder(w).Encode(doc)
 	})

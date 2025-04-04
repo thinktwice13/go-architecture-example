@@ -15,8 +15,8 @@ var (
 	_ input.EventSubscriber = (*Bus)(nil)
 )
 
-func (*Bus) Publish(domain.DocumentEvent) error {
-	fmt.Println("Publishing event to the bus")
+func (*Bus) Publish(event domain.DocumentEvent) error {
+	fmt.Printf("Event \"%s\" published\n", event.Type)
 	return nil
 }
 

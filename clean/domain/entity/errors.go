@@ -1,18 +1,8 @@
 package entity
 
-import (
-	"fmt"
-)
+import "errors"
 
-// ErrNotFound represents a not found error
-type ErrNotFound struct {
-	ID  string
-	Msg string
-}
-
-func (e ErrNotFound) Error() string {
-	return fmt.Sprintf("not found: %s (%s)", e.Msg, e.ID)
-}
+var ErrNotFound = errors.New("resource not found")
 
 // ErrInvalidDocument represents a validation error
 type ErrInvalidDocument struct {

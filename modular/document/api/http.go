@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"modular/document/domain"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/julienschmidt/httprouter"
@@ -11,13 +12,13 @@ import (
 
 // HTTPHandler handles HTTP requests for documents
 type HTTPHandler struct {
-	documentService DocumentService
+	service DocumentService
 }
 
 // NewHTTPHandler creates a new HTTP handler
 func NewHTTPHandler(documentService DocumentService) *HTTPHandler {
 	return &HTTPHandler{
-		documentService: documentService,
+		service: documentService,
 	}
 }
 
@@ -28,18 +29,39 @@ func (h *HTTPHandler) RegisterRoutes(router *httprouter.Router) {
 }
 
 // uploadDocument handles document upload requests
-func (h *HTTPHandler) uploadDocument(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
-	_ = h.documentService.UploadDocument(domain.Document{
+func (h *HTTPHandler) uploadDocument(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	if err := r.ParseMultipartForm(2 << 20); err != nil {
+		http.Error(w, "Error parsing form", http.StatusBadRequest)
+		return
+	}
+
+	_, header, err := r.FormFile("file")
+	if err != nil {
+		http.Error(w, "Error retrieving the file", http.StatusBadRequest)
+		return
+	}
+
+	if err := h.service.Upload(domain.Document{
 		ID:        time.Now().Format("20060102150405"),
-		Name:      "sample.txt",
+		Name:      header.Filename,
 		Status:    "new",
 		CreatedAt: time.Now().UTC(),
-	})
+	}); err != nil {
+		http.Error(w, "Error uploading the file", http.StatusInternalServerError)
+	}
+
+	w.Header().Set("Location", "/documents/"+header.Filename)
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Length", strconv.Itoa(len(header.Filename)))
 	w.WriteHeader(http.StatusCreated)
+	if _, err = w.Write([]byte(header.Filename)); err != nil {
+		http.Error(w, "Error writing response", http.StatusInternalServerError)
+		return
+	}
 }
 
 // getDocument handles document retrieval requests
 func (h *HTTPHandler) getDocument(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	document, _ := h.documentService.GetDocument(ps.ByName("id"))
+	document, _ := h.service.Find(ps.ByName("id"))
 	_ = json.NewEncoder(w).Encode(document)
 }

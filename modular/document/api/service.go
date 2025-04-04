@@ -4,6 +4,6 @@ import "modular/document/domain"
 
 // DocumentService defines the public API for the documents module
 type DocumentService interface {
-	UploadDocument(domain.Document) error
-	GetDocument(id string) (*domain.Document, error)
+	Upload(domain.Document) error
+	Find(id string) (*domain.Document, error)
 }

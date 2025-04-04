@@ -1,6 +1,7 @@
 package upload
 
 import (
+	"encoding/json"
 	"time"
 	"vertical/shared/domain"
 	"vertical/shared/event"
@@ -11,12 +12,18 @@ type Service struct {
 	pub  *event.Bus
 }
 
-func (s *Service) UploadDocument(doc domain.Document) error {
-	_ = s.repo.Save(doc)
-	_ = s.pub.Publish(domain.DocumentEvent{
-		Type:      domain.EventDocumentUploaded,
-		Document:  &doc,
-		Timestamp: time.Time{},
-	})
-	return nil
+func (s *Service) upload(doc domain.Document) error {
+	if err := s.repo.Save(doc); err != nil {
+		return err
+	}
+
+	if bytes, err := json.Marshal(doc); err != nil {
+		return err
+	} else {
+		return s.pub.Publish(domain.DocumentEvent{
+			Type:      domain.EventDocumentUploaded,
+			Timestamp: time.Now().UTC(),
+			Data:      bytes,
+		})
+	}
 }

@@ -12,6 +12,6 @@ const (
 
 type DocumentEvent struct {
 	Type      EventType
-	Document  *Document
 	Timestamp time.Time
+	Data      []byte
 }

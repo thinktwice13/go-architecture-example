@@ -14,7 +14,7 @@ import (
 func RunApplication() error {
 	// Infra
 	_ = config.Load()
-	dbConn := &db.Conn{}
+	dbConn := db.Connect()
 	eb := &event.Bus{}
 	router := httprouter.New()
 

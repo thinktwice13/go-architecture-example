@@ -1,6 +1,7 @@
 package repo
 
 import (
+	"encoding/json"
 	"fmt"
 	"modular/common/infra/db"
 	"modular/document/domain"
@@ -17,8 +18,12 @@ func NewRepo(sb *db.Conn) *Repo {
 	return &Repo{sb}
 }
 
-func (r *Repo) Save(domain.Document) error {
-	fmt.Println("Saving document to database")
+func (r *Repo) Save(doc domain.Document) error {
+	if bytes, err := json.Marshal(doc); err != nil {
+		return err
+	} else {
+		r.sb.Set(doc.ID, bytes)
+	}
 	return nil
 }
 

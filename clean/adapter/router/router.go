@@ -24,7 +24,7 @@ func (r *Router) Routes() *httprouter.Router {
 
 	// Document routes
 	router.POST("/documents", r.documentHandler.Upload)
-	router.GET("/documents/:id", r.documentHandler.Get)
+	router.GET("/documents/:id", r.documentHandler.HandleGet)
 
 	// Health check
 	router.GET("/health", func(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {

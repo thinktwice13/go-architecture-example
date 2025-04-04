@@ -1,27 +1,13 @@
 package event
 
-import (
-	"time"
-)
+import "time"
 
-type DocumentEvent interface {
-	GetDocumentID() string
-}
+type EventType string
 
-type DocumentUploaded struct {
-	DocumentID string
-	Timestamp  time.Time
-}
+const EventDocumentUploaded EventType = "document.uploaded"
 
-func (e DocumentUploaded) GetDocumentID() string {
-	return e.DocumentID
-}
-
-type DocumentRetrieved struct {
-	DocumentID string
-	Timestamp  time.Time
-}
-
-func (e DocumentRetrieved) GetDocumentID() string {
-	return e.DocumentID
+type DocumentEvent struct {
+	Type      EventType
+	Timestamp time.Time
+	Data      []byte
 }

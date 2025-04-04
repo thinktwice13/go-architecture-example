@@ -14,7 +14,7 @@ import (
 func RunApplication() error {
 	// Infra
 	_ = config.Load()
-	store := &db.Conn{}
+	store := db.Connect()
 
 	// Common driven services and workers
 	eb := &event.Bus{}
