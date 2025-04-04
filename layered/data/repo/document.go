@@ -22,6 +22,7 @@ func (d *Document) Save(doc model.Document) error {
 		return err
 	}
 	d.db.Set(doc.ID, bytes)
+	return nil
 }
 
 func (*Document) FindByID(_ string) (*model.Document, error) {
